@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>HBD-Indhu</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body, html {
+      height: 100%;
+      background: black;
+      overflow: hidden;
+      font-family: 'Poppins', sans-serif;
+    }
+    .message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #3bffe8;
+      text-shadow: 0 0 10px #3bffe8, 0 0 30px #3bffe8, 0 0 80px #3bffe8;
+      font-size: 1.3rem;
+      padding: 20px;
+      max-width: 90%;
+      text-align: center;
+      z-index: 1;
+      pointer-events: none;
+    }
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+    }
+  </style>
+</head>
+<body>
+  <div class="message">
+    Many More Happpieee Returns of the Day Indhu✨🎉🎊 Stay Happy🎂 and Enjoy ur Life🎇<br><br>
+    Advice nu nenachukathe😂😅.. Birthday anaiku nallatha nallu varthai sollanum la😅<br>
+    Yarukagavum Ethukagavum Unna Mathikathe...🎀 Nalla Padi...🎗 Nalla Sapdu🥪<br>
+    Appa Amma Anna Amuchi solra peachu ellaem kelu...☺ Avnga ethu sonnalum nalathuku tha solluvanga...🤩<br><br>
+    Ellathaiyum Mandalaila potu kulapittu irukathe.. Romba stress agathe... Career neachu um worry panikathe..<br>
+    Ena Analum "Pathukalam" nu oru Hope Vachuko..😀<br><br>
+    Un life la Unaku endha Problem and ena Help nalum kelu oru Friend ah or supportive Brother ah na irupen...💯<br>
+    Sadness ellam thalli vachutu.. Inaiku happy ah iru...<br><br>
+    Once Again Happpieee Birthday Teacher akka🙌✨<br><br>
+    Good Soul🤍 & Gem💎
+  </div>
+
+  <canvas id="scratch"></canvas>
+
+  <script>
+    const canvas = document.getElementById('scratch');
+    const ctx = canvas.getContext('2d');
+
+    let isDrawing = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      drawCover();
+    }
+
+    function drawCover() {
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.fillStyle = '#999'; // Cover color
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function startDraw(e) {
+      isDrawing = true;
+      [lastX, lastY] = [e.clientX, e.clientY];
+    }
+
+    function draw(e) {
+      if (!isDrawing) return;
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.lineWidth = 50;
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(e.clientX, e.clientY);
+      ctx.stroke();
+      [lastX, lastY] = [e.clientX, e.clientY];
+    }
+
+    function endDraw() {
+      isDrawing = false;
+    }
+
+    // Mouse Events
+    canvas.addEventListener('mousedown', startDraw);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', endDraw);
+    canvas.addEventListener('mouseout', endDraw);
+
+    // Touch Events
+    canvas.addEventListener('touchstart', (e) => {
+      const touch = e.touches[0];
+      isDrawing = true;
+      [lastX, lastY] = [touch.clientX, touch.clientY];
+    });
+
+    canvas.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      if (!isDrawing) return;
+      const touch = e.touches[0];
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
+      ctx.lineWidth = 50;
+      ctx.beginPath();
+      ctx.moveTo(lastX, lastY);
+      ctx.lineTo(touch.clientX, touch.clientY);
+      ctx.stroke();
+      [lastX, lastY] = [touch.clientX, touch.clientY];
+    }, { passive: false });
+
+    canvas.addEventListener('touchend', endDraw);
+    canvas.addEventListener('touchcancel', endDraw);
+
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+  </script>
+</body>
+</html>
